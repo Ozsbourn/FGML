@@ -1,6 +1,9 @@
-#include "util.hpp"
-
 #ifndef FGML_VECTOR3_HPP_
+#include "Macros.hpp"
+#include <cassert>
+#include <iostream> // debug
+#include <cmath>
+
 #define FGML_VECTOR3_HPP_
 
 namespace FGML {
@@ -15,15 +18,19 @@ namespace FGML {
 	public:
 		Vector3() = default;
 
-		Vector3(  float x,
-				  float y, 
-				  float z  );
+		explicit Vector3(  float x,
+				  		   float y, 
+				  		   float z  );
+
+		friend inline float getXComponent(const Vector3& vec);
+		friend inline float getYComponent(const Vector3& vec);
+		friend inline float getZComponent(const Vector3& vec);
 
 		friend Vector3 operator-(const Vector3& vec);
 		friend Vector3 operator-(const Vector3& vec1, const Vector3& vec2);
 		friend Vector3 operator+(const Vector3& vec1, const Vector3& vec2);
-		friend Vector3 operator*(const Vector3& vec, const float& scalar);
-		friend Vector3 operator/(const Vector3& vec, const float& scalar);
+		friend Vector3 operator*(const Vector3& vec,  const float& scalar);
+		friend Vector3 operator/(const Vector3& vec,  const float& scalar);
 
 		void 	   	   operator-=(const float& scalar);
 		void 	   	   operator+=(const float& scalar);
@@ -53,6 +60,18 @@ namespace FGML {
 						 	  float y = 0.0f, 
 						 	  float z = 0.0f  ) 
 	: m_x(x), m_y(y), m_z(z) {}
+
+	inline float getXComponent(const Vector3& vec){
+		return vec.m_x;
+	}
+
+	inline float getYComponent(const Vector3& vec){
+		return vec.m_y;
+	}
+
+	inline float getZComponent(const Vector3& vec){
+		return vec.m_z;
+	}
 
 	inline void Vector3::operator-=(const float& scalar){
 		this->m_x -= scalar;
@@ -89,7 +108,7 @@ namespace FGML {
 						  (vec1.m_x * vec2.m_y - vec1.m_y * vec2.m_x)  );
 	}
 
-	inline float	  DotProduct(const Vector3& vec1, const Vector3& vec2){
+	inline float   DotProduct(const Vector3& vec1, const Vector3& vec2){
 		return (vec1.m_x * vec2.m_x + vec1.m_y * vec2.m_y + vec1.m_z * vec2.m_z);
 	}
 

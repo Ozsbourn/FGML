@@ -1,10 +1,10 @@
 #ifndef FGML_API_FGML_HPP_
 #define FGML_API_FGML_HPP_
 
-//#define FGML_DEBUG 
-#ifdef FGML_DEBUG
-	#include "util.hpp"
-#endif // FGML_DEBUG
+#include <iostream>
+#include <cstddef>
+#include <cmath>
+#include <cassert>
 
 #include "Constants.hpp"
 #include "Macros.hpp"
@@ -13,6 +13,9 @@
 #include "Vector3.hpp"
 #include "Vector4.hpp"
 
+#include "Matrix3x3.hpp"
+#include "Matrix4x4.hpp"
+
 namespace FGML {
 	///
 	///	FGML Type declarations
@@ -20,6 +23,9 @@ namespace FGML {
 	using vec2_t = FGML::Vector2;
 	using vec3_t = FGML::Vector3;
 	using vec4_t = FGML::Vector4;
+
+	using mat3_t = FGML::Matrix3x3;
+	using mat4_t = FGML::Matrix4x4;
 	///
 	///	FGML Type declarations end
 	///
