@@ -1,3 +1,5 @@
+#include <iostream>
+
 #ifndef FGML_VECTOR2_HPP_
 #define FGML_VECTOR2_HPP_
 
@@ -10,10 +12,13 @@ namespace FGML {
 		float m_x; 
 		float m_y;
 	public:
-		Vector2() = default;
+		explicit Vector2() = default;
 
-		Vector2(  float x, 
-				  float y  );
+		explicit Vector2( float x, 
+				 		  float y );
+
+		friend inline float getXComponent(const Vector2& vec);
+		friend inline float getYComponent(const Vector2& vec);
 
 		friend Vector2 operator-(const Vector2& vec);
 		friend Vector2 operator-(const Vector2& vec1, const Vector2& vec2);
@@ -47,6 +52,14 @@ namespace FGML {
 	Vector2::Vector2(  float x = 0.0f, 
 					   float y = 0.0f  ) 
 	: m_x(x), m_y(y) {}
+
+	inline float getXComponent(const Vector2& vec){
+		return vec.m_x;
+	}
+
+	inline float getYComponent(const Vector2& vec){
+		return vec.m_y;
+	}
 
 	inline void Vector2::operator-=(const float& scalar){
 		this->m_x -= scalar; 
