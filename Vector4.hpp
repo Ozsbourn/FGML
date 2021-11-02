@@ -19,10 +19,10 @@ namespace FGML {
 	public:
 		Vector4() = default;
 
-		Vector4(  float x,
-				  float y, 
-				  float z,
-				  float w  );
+		Vector4( float x,
+				 float y, 
+				 float z,
+				 float w );
 
 		friend inline float getXComponent(const Vector4& vec);
 		friend inline float getYComponent(const Vector4& vec);
@@ -42,7 +42,7 @@ namespace FGML {
 
 		inline float&  operator[](const size_t& shifting);
 
-		friend inline float	    DotProduct(const Vector4& vec1, const Vector4& vec2);
+		friend inline float	  DotProduct(const Vector4& vec1, const Vector4& vec2);
 
 		friend inline float	  Magnitude(const Vector4& vec);
 		friend inline Vector4 Normalize(const Vector4& vec);
@@ -59,7 +59,7 @@ namespace FGML {
 	///	Declaration of Vec4 methods
 	///
 	Vector4::Vector4(  float x = 0.0f,
-				  	   float y = 0.0f, 
+				  	   float y = 0.0f,
 				  	   float z = 0.0f,
 				  	   float w = 0.0f  ) 
 	: m_x(x), m_y(y), m_z(z), m_w(w) {}
@@ -146,7 +146,7 @@ namespace FGML {
 		return *((&this->m_x) + shifting);
 	}
 
-	inline float   DotProduct(const Vector4& vec1, const Vector4& vec2){
+	inline float    DotProduct(const Vector4& vec1, const Vector4& vec2){
 		return (vec1.m_x * vec2.m_x + vec1.m_y * vec2.m_y + vec1.m_z * vec2.m_z + vec1.m_w * vec2.m_w);
 	}
 

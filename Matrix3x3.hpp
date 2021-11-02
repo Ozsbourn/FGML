@@ -30,12 +30,16 @@ namespace FGML {
 		inline void operator*=(const float& scalar);
 		inline void operator/=(const float& scalar);
 
+		inline void operator-=(const Matrix3x3& mat);
+		inline void operator+=(const Matrix3x3& mat);
+		// inline void operator*=(const Matrix3x3& mat);
+
 		friend inline Matrix3x3 operator-(const Matrix3x3& mat);
 		friend inline Matrix3x3 operator-(const Matrix3x3& mat1, const Matrix3x3& mat2);
 		friend inline Matrix3x3 operator+(const Matrix3x3& mat1, const Matrix3x3& mat2);
 		friend inline Matrix3x3 operator*(const Matrix3x3& mat1, const Matrix3x3& mat2);
 
-		friend inline Vector3   operator*(Matrix3x3& mat,  Vector3& vec);
+		friend inline Vector3   operator*(const Matrix3x3& mat,  const Vector3& vec);
 
 		friend inline Matrix3x3 operator-(const Matrix3x3& mat,  const float& scalar);
 		friend inline Matrix3x3 operator+(const Matrix3x3& mat,  const float& scalar);
@@ -43,6 +47,8 @@ namespace FGML {
 		friend inline Matrix3x3 operator/(const Matrix3x3& mat,  const float& scalar);
 
 		inline Vector3 operator[](size_t i);
+
+		~Matrix3x3() = default;
 
 		friend std::ostream& operator<<(std::ostream& out, Matrix3x3 m);
 	};
@@ -53,9 +59,9 @@ namespace FGML {
 	///
 	///	Declaration of Mat3x3 methods
 	///
-	Matrix3x3::Matrix3x3(  float v11 = 0.0f, float v12 = 0.0f, float v13 = 0.0f,
-						   float v21 = 0.0f, float v22 = 0.0f, float v23 = 0.0f,
-						   float v31 = 0.0f, float v32 = 0.0f, float v33 = 0.0f  ) 
+	Matrix3x3::Matrix3x3( float v11 = 0.0f, float v12 = 0.0f, float v13 = 0.0f,
+						  float v21 = 0.0f, float v22 = 0.0f, float v23 = 0.0f,
+						  float v31 = 0.0f, float v32 = 0.0f, float v33 = 0.0f ) 
 	: m_arr{ v11, v12, v13,
 			 v21, v22, v23,
 			 v31, v32, v33 } {}
@@ -91,6 +97,32 @@ namespace FGML {
 		this->m_arr[2][0] *= scalar; this->m_arr[2][1] *= scalar; this->m_arr[2][2] *= scalar;
 	}
 
+	inline void Matrix3x3::operator-=(const Matrix3x3& mat){
+		this->m_arr[0][0] -= mat.m_arr[0][0]; this->m_arr[0][1] -= mat.m_arr[0][1]; this->m_arr[0][2] -= mat.m_arr[0][2];
+		this->m_arr[1][0] -= mat.m_arr[1][0]; this->m_arr[1][1] -= mat.m_arr[1][1]; this->m_arr[1][2] -= mat.m_arr[1][2];
+		this->m_arr[2][0] -= mat.m_arr[2][0]; this->m_arr[2][1] -= mat.m_arr[2][1]; this->m_arr[2][2] -= mat.m_arr[2][2];
+	}
+
+	inline void Matrix3x3::operator+=(const Matrix3x3& mat){
+		this->m_arr[0][0] += mat.m_arr[0][0]; this->m_arr[0][1] += mat.m_arr[0][1]; this->m_arr[0][2] += mat.m_arr[0][2];
+		this->m_arr[1][0] += mat.m_arr[1][0]; this->m_arr[1][1] += mat.m_arr[1][1]; this->m_arr[1][2] += mat.m_arr[1][2];
+		this->m_arr[2][0] += mat.m_arr[2][0]; this->m_arr[2][1] += mat.m_arr[2][1]; this->m_arr[2][2] += mat.m_arr[2][2];
+	}
+
+	// inline void Matrix3x3::operator*=(const Matrix3x3& mat){
+	// 	this->m_arr[0][0] = this->m_arr[0][0] * mat.m_arr[0][0] + this->m_arr[0][1] * mat.m_arr[1][0] + this->m_arr[0][2] * mat.m_arr[2][0];
+	// 	this->m_arr[0][1] = this->m_arr[0][0] * mat.m_arr[0][1] + this->m_arr[0][1] * mat.m_arr[1][1] + this->m_arr[0][2] * mat.m_arr[2][1];
+	// 	this->m_arr[0][2] = this->m_arr[0][0] * mat.m_arr[0][2] + this->m_arr[0][1] * mat.m_arr[1][2] + this->m_arr[0][2] * mat.m_arr[2][2];
+
+	// 	this->m_arr[1][0] = this->m_arr[1][0] * mat.m_arr[0][0] + this->m_arr[1][1] * mat.m_arr[1][0] + this->m_arr[1][2] * mat.m_arr[2][0];
+	// 	this->m_arr[1][1] = this->m_arr[1][0] * mat.m_arr[0][1] + this->m_arr[1][1] * mat.m_arr[1][1] + this->m_arr[1][2] * mat.m_arr[2][1];
+	// 	this->m_arr[1][2] = this->m_arr[1][0] * mat.m_arr[0][2] + this->m_arr[1][1] * mat.m_arr[1][2] + this->m_arr[1][2] * mat.m_arr[2][2];
+
+	// 	this->m_arr[2][0] = this->m_arr[2][0] * mat.m_arr[0][0] + this->m_arr[2][1] * mat.m_arr[1][0] + this->m_arr[2][2] * mat.m_arr[2][0];
+	// 	this->m_arr[2][1] = this->m_arr[2][0] * mat.m_arr[0][1] + this->m_arr[2][1] * mat.m_arr[1][1] + this->m_arr[2][2] * mat.m_arr[2][1];
+	// 	this->m_arr[2][2] = this->m_arr[2][0] * mat.m_arr[0][2] + this->m_arr[2][1] * mat.m_arr[1][2] + this->m_arr[2][2] * mat.m_arr[2][2];
+	// }
+
 	inline void Matrix3x3::operator/=(const float& scalar){
 		float divCoeff = 1 / scalar;
 		this->m_arr[0][0] *= divCoeff; this->m_arr[0][1] *= divCoeff; this->m_arr[0][2] *= divCoeff;
@@ -101,64 +133,64 @@ namespace FGML {
 	inline Matrix3x3 operator-(const Matrix3x3& mat){
 		return Matrix3x3(  -mat.m_arr[0][0], -mat.m_arr[0][1], -mat.m_arr[0][2],
 						   -mat.m_arr[1][0], -mat.m_arr[1][1], -mat.m_arr[1][2],
-						   -mat.m_arr[2][0], -mat.m_arr[2][1], -mat.m_arr[2][2]  );
+						   -mat.m_arr[2][0], -mat.m_arr[2][1], -mat.m_arr[2][2] );
 	}
 
 	inline Matrix3x3 operator-(const Matrix3x3& mat1, const Matrix3x3& mat2){
-		return Matrix3x3(  mat1.m_arr[0][0] - mat2.m_arr[0][0], mat1.m_arr[0][1] - mat2.m_arr[0][1], mat1.m_arr[0][2] - mat2.m_arr[0][2],
-						   mat1.m_arr[1][0] - mat2.m_arr[1][0], mat1.m_arr[1][1] - mat2.m_arr[1][1], mat1.m_arr[1][2] - mat2.m_arr[1][2],
-						   mat1.m_arr[2][0] - mat2.m_arr[2][0], mat1.m_arr[2][1] - mat2.m_arr[2][1], mat1.m_arr[2][2] - mat2.m_arr[2][2]  );
+		return Matrix3x3( mat1.m_arr[0][0] - mat2.m_arr[0][0], mat1.m_arr[0][1] - mat2.m_arr[0][1], mat1.m_arr[0][2] - mat2.m_arr[0][2],
+						  mat1.m_arr[1][0] - mat2.m_arr[1][0], mat1.m_arr[1][1] - mat2.m_arr[1][1], mat1.m_arr[1][2] - mat2.m_arr[1][2],
+						  mat1.m_arr[2][0] - mat2.m_arr[2][0], mat1.m_arr[2][1] - mat2.m_arr[2][1], mat1.m_arr[2][2] - mat2.m_arr[2][2] );
 	}
 
 	inline Matrix3x3 operator+(const Matrix3x3& mat1, const Matrix3x3& mat2){
-		return Matrix3x3(  mat1.m_arr[0][0] + mat2.m_arr[0][0], mat1.m_arr[0][1] + mat2.m_arr[0][1], mat1.m_arr[0][2] + mat2.m_arr[0][2],
-						   mat1.m_arr[1][0] + mat2.m_arr[1][0], mat1.m_arr[1][1] + mat2.m_arr[1][1], mat1.m_arr[1][2] + mat2.m_arr[1][2],
-						   mat1.m_arr[2][0] + mat2.m_arr[2][0], mat1.m_arr[2][1] + mat2.m_arr[2][1], mat1.m_arr[2][2] + mat2.m_arr[2][2]  );
+		return Matrix3x3( mat1.m_arr[0][0] + mat2.m_arr[0][0], mat1.m_arr[0][1] + mat2.m_arr[0][1], mat1.m_arr[0][2] + mat2.m_arr[0][2],
+						  mat1.m_arr[1][0] + mat2.m_arr[1][0], mat1.m_arr[1][1] + mat2.m_arr[1][1], mat1.m_arr[1][2] + mat2.m_arr[1][2],
+						  mat1.m_arr[2][0] + mat2.m_arr[2][0], mat1.m_arr[2][1] + mat2.m_arr[2][1], mat1.m_arr[2][2] + mat2.m_arr[2][2] );
 	}
 
 	inline Matrix3x3 operator*(const Matrix3x3& mat1, const Matrix3x3& mat2){
-		return Matrix3x3(  mat1.m_arr[0][0] * mat2.m_arr[0][0] + mat1.m_arr[0][1] * mat2.m_arr[1][0] + mat1.m_arr[0][2] * mat2.m_arr[2][0],
-						   mat1.m_arr[0][0] * mat2.m_arr[0][1] + mat1.m_arr[0][1] * mat2.m_arr[1][1] + mat1.m_arr[0][2] * mat2.m_arr[2][1],
-						   mat1.m_arr[0][0] * mat2.m_arr[0][2] + mat1.m_arr[0][1] * mat2.m_arr[1][2] + mat1.m_arr[0][2] * mat2.m_arr[2][2],
+		return Matrix3x3( mat1.m_arr[0][0] * mat2.m_arr[0][0] + mat1.m_arr[0][1] * mat2.m_arr[1][0] + mat1.m_arr[0][2] * mat2.m_arr[2][0],
+						  mat1.m_arr[0][0] * mat2.m_arr[0][1] + mat1.m_arr[0][1] * mat2.m_arr[1][1] + mat1.m_arr[0][2] * mat2.m_arr[2][1],
+						  mat1.m_arr[0][0] * mat2.m_arr[0][2] + mat1.m_arr[0][1] * mat2.m_arr[1][2] + mat1.m_arr[0][2] * mat2.m_arr[2][2],
 
-						   mat1.m_arr[1][0] * mat2.m_arr[0][0] + mat1.m_arr[1][1] * mat2.m_arr[1][0] + mat1.m_arr[1][2] * mat2.m_arr[2][0],
-						   mat1.m_arr[1][0] * mat2.m_arr[0][1] + mat1.m_arr[1][1] * mat2.m_arr[1][1] + mat1.m_arr[1][2] * mat2.m_arr[2][1],
-						   mat1.m_arr[1][0] * mat2.m_arr[0][2] + mat1.m_arr[1][1] * mat2.m_arr[1][2] + mat1.m_arr[1][2] * mat2.m_arr[2][2],
+						  mat1.m_arr[1][0] * mat2.m_arr[0][0] + mat1.m_arr[1][1] * mat2.m_arr[1][0] + mat1.m_arr[1][2] * mat2.m_arr[2][0],
+						  mat1.m_arr[1][0] * mat2.m_arr[0][1] + mat1.m_arr[1][1] * mat2.m_arr[1][1] + mat1.m_arr[1][2] * mat2.m_arr[2][1],
+						  mat1.m_arr[1][0] * mat2.m_arr[0][2] + mat1.m_arr[1][1] * mat2.m_arr[1][2] + mat1.m_arr[1][2] * mat2.m_arr[2][2],
 
-						   mat1.m_arr[2][0] * mat2.m_arr[0][0] + mat1.m_arr[2][1] * mat2.m_arr[1][0] + mat1.m_arr[2][2] * mat2.m_arr[2][0],
-						   mat1.m_arr[2][0] * mat2.m_arr[0][1] + mat1.m_arr[2][1] * mat2.m_arr[1][1] + mat1.m_arr[2][2] * mat2.m_arr[2][1],
-						   mat1.m_arr[2][0] * mat2.m_arr[0][2] + mat1.m_arr[2][1] * mat2.m_arr[1][2] + mat1.m_arr[2][2] * mat2.m_arr[2][2]  );
+						  mat1.m_arr[2][0] * mat2.m_arr[0][0] + mat1.m_arr[2][1] * mat2.m_arr[1][0] + mat1.m_arr[2][2] * mat2.m_arr[2][0],
+						  mat1.m_arr[2][0] * mat2.m_arr[0][1] + mat1.m_arr[2][1] * mat2.m_arr[1][1] + mat1.m_arr[2][2] * mat2.m_arr[2][1],
+						  mat1.m_arr[2][0] * mat2.m_arr[0][2] + mat1.m_arr[2][1] * mat2.m_arr[1][2] + mat1.m_arr[2][2] * mat2.m_arr[2][2] );
 	}
 
-	inline Vector3   operator*(Matrix3x3& mat,  Vector3& vec){
-		return   Vector3(  mat.m_arr[0][0] * getXComponent(vec) + mat.m_arr[0][1] * getYComponent(vec) + mat.m_arr[0][2] * getZComponent(vec),
-						   mat.m_arr[1][0] * getXComponent(vec) + mat.m_arr[1][1] * getYComponent(vec) + mat.m_arr[1][2] * getZComponent(vec),
-						   mat.m_arr[2][0] * getXComponent(vec) + mat.m_arr[2][1] * getYComponent(vec) + mat.m_arr[2][2] * getZComponent(vec)  );
+	inline Vector3   operator*(const Matrix3x3& mat,  const Vector3& vec){
+		return   Vector3( mat.m_arr[0][0] * getXComponent(vec) + mat.m_arr[0][1] * getYComponent(vec) + mat.m_arr[0][2] * getZComponent(vec),
+						  mat.m_arr[1][0] * getXComponent(vec) + mat.m_arr[1][1] * getYComponent(vec) + mat.m_arr[1][2] * getZComponent(vec),
+						  mat.m_arr[2][0] * getXComponent(vec) + mat.m_arr[2][1] * getYComponent(vec) + mat.m_arr[2][2] * getZComponent(vec) );
 	}
 
 	inline Matrix3x3 operator-(const Matrix3x3& mat,  const float& scalar){
-		return Matrix3x3(  mat.m_arr[0][0] - scalar, mat.m_arr[0][1] - scalar, mat.m_arr[0][2] - scalar,
-						   mat.m_arr[1][0] - scalar, mat.m_arr[1][1] - scalar, mat.m_arr[1][2] - scalar,
-						   mat.m_arr[2][0] - scalar, mat.m_arr[2][1] - scalar, mat.m_arr[2][2] - scalar  );
+		return Matrix3x3( mat.m_arr[0][0] - scalar, mat.m_arr[0][1] - scalar, mat.m_arr[0][2] - scalar,
+						  mat.m_arr[1][0] - scalar, mat.m_arr[1][1] - scalar, mat.m_arr[1][2] - scalar,
+						  mat.m_arr[2][0] - scalar, mat.m_arr[2][1] - scalar, mat.m_arr[2][2] - scalar );
 	}
 
 	inline Matrix3x3 operator+(const Matrix3x3& mat,  const float& scalar){
-		return Matrix3x3(  mat.m_arr[0][0] + scalar, mat.m_arr[0][1] + scalar, mat.m_arr[0][2] + scalar,
-						   mat.m_arr[1][0] + scalar, mat.m_arr[1][1] + scalar, mat.m_arr[1][2] + scalar,
-						   mat.m_arr[2][0] + scalar, mat.m_arr[2][1] + scalar, mat.m_arr[2][2] + scalar  );
+		return Matrix3x3( mat.m_arr[0][0] + scalar, mat.m_arr[0][1] + scalar, mat.m_arr[0][2] + scalar,
+						  mat.m_arr[1][0] + scalar, mat.m_arr[1][1] + scalar, mat.m_arr[1][2] + scalar,
+						  mat.m_arr[2][0] + scalar, mat.m_arr[2][1] + scalar, mat.m_arr[2][2] + scalar );
 	}
 
 	inline Matrix3x3 operator*(const Matrix3x3& mat,  const float& scalar){
-		return Matrix3x3(  mat.m_arr[0][0] * scalar, mat.m_arr[0][1] * scalar, mat.m_arr[0][2] * scalar,
-						   mat.m_arr[1][0] * scalar, mat.m_arr[1][1] * scalar, mat.m_arr[1][2] * scalar,
-						   mat.m_arr[2][0] * scalar, mat.m_arr[2][1] * scalar, mat.m_arr[2][2] * scalar  );
+		return Matrix3x3( mat.m_arr[0][0] * scalar, mat.m_arr[0][1] * scalar, mat.m_arr[0][2] * scalar,
+						  mat.m_arr[1][0] * scalar, mat.m_arr[1][1] * scalar, mat.m_arr[1][2] * scalar,
+						  mat.m_arr[2][0] * scalar, mat.m_arr[2][1] * scalar, mat.m_arr[2][2] * scalar );
 	}
 
 	inline Matrix3x3 operator/(const Matrix3x3& mat,  const float& scalar){
 		float divCoeff = 1 / scalar;
-		return Matrix3x3(  mat.m_arr[0][0] * divCoeff, mat.m_arr[0][1] * divCoeff, mat.m_arr[0][2] * divCoeff,
-						   mat.m_arr[1][0] * divCoeff, mat.m_arr[1][1] * divCoeff, mat.m_arr[1][2] * divCoeff,
-						   mat.m_arr[2][0] * divCoeff, mat.m_arr[2][1] * divCoeff, mat.m_arr[2][2] * divCoeff  );
+		return Matrix3x3( mat.m_arr[0][0] * divCoeff, mat.m_arr[0][1] * divCoeff, mat.m_arr[0][2] * divCoeff,
+						  mat.m_arr[1][0] * divCoeff, mat.m_arr[1][1] * divCoeff, mat.m_arr[1][2] * divCoeff,
+						  mat.m_arr[2][0] * divCoeff, mat.m_arr[2][1] * divCoeff, mat.m_arr[2][2] * divCoeff );
 	}
 
 	inline Vector3 Matrix3x3::operator[](size_t i){
@@ -168,9 +200,9 @@ namespace FGML {
 	}
 
 	std::ostream& operator<<(std::ostream& out, Matrix3x3 m){
-		std::cout << m.m_arr[0][0] << m.m_arr[0][1] << m.m_arr[0][2] << std::endl;
-		std::cout << m.m_arr[1][0] << m.m_arr[1][1] << m.m_arr[1][2] << std::endl;
-		std::cout << m.m_arr[2][0] << m.m_arr[2][1] << m.m_arr[2][2] << std::endl;
+		std::cout << m.m_arr[0][0] << " | " << m.m_arr[0][1] << " | " << m.m_arr[0][2] << std::endl;
+		std::cout << m.m_arr[1][0] << " | " << m.m_arr[1][1] << " | " << m.m_arr[1][2] << std::endl;
+		std::cout << m.m_arr[2][0] << " | " << m.m_arr[2][1] << " | " << m.m_arr[2][2] << std::endl;
 		return out;
 	}
 	///
