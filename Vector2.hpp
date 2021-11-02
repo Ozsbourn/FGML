@@ -1,5 +1,3 @@
-#include "util.hpp"
-
 #ifndef FGML_VECTOR2_HPP_
 #define FGML_VECTOR2_HPP_
 

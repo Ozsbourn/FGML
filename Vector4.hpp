@@ -1,4 +1,7 @@
-#include "util.hpp"
+#include "Macros.hpp"
+#include <cassert>
+#include <iostream> // debug
+#include <cmath>
 
 #ifndef FGML_VECTOR4_HPP_
 #define FGML_VECTOR4_HPP_
@@ -20,6 +23,11 @@ namespace FGML {
 				  float y, 
 				  float z,
 				  float w  );
+
+		friend inline float getXComponent(const Vector4& vec);
+		friend inline float getYComponent(const Vector4& vec);
+		friend inline float getZComponent(const Vector4& vec);
+		friend inline float getWComponent(const Vector4& vec);
 
 		friend Vector4 operator-(const Vector4& vec);
 		friend Vector4 operator-(const Vector4& vec1, const Vector4& vec2);
@@ -55,6 +63,22 @@ namespace FGML {
 				  	   float z = 0.0f,
 				  	   float w = 0.0f  ) 
 	: m_x(x), m_y(y), m_z(z), m_w(w) {}
+
+	inline float getXComponent(const Vector4& vec){
+		return vec.m_x;
+	}
+
+	inline float getYComponent(const Vector4& vec){
+		return vec.m_y;
+	}
+
+	inline float getZComponent(const Vector4& vec){
+		return vec.m_z;
+	}
+
+	inline float getWComponent(const Vector4& vec){
+		return vec.m_w;
+	}
 
 	inline Vector4 operator-(const Vector4& vec){
 		return Vector4(-vec.m_x, -vec.m_y, -vec.m_z, -vec.m_w);
