@@ -44,6 +44,9 @@ namespace FGML {
 
 		friend inline float	  DotProduct(const Vector4& vec1, const Vector4& vec2);
 
+		friend inline Vector4 Project(const Vector4& vec1, const Vector4& vec2);
+		friend inline Vector4  Reject(const Vector4& vec1, const Vector4& vec2);
+
 		friend inline float	  Magnitude(const Vector4& vec);
 		friend inline Vector4 Normalize(const Vector4& vec);
 
@@ -148,6 +151,14 @@ namespace FGML {
 
 	inline float    DotProduct(const Vector4& vec1, const Vector4& vec2){
 		return (vec1.m_x * vec2.m_x + vec1.m_y * vec2.m_y + vec1.m_z * vec2.m_z + vec1.m_w * vec2.m_w);
+	}
+
+	inline Vector4 Project(const Vector4& vec1, const Vector4& vec2){
+		return (vec2 * DotProduct(vec1, vec2) / DotProduct(vec2, vec2));
+	}
+
+	inline Vector4  Reject(const Vector4& vec1, const Vector4& vec2){
+		return (vec1 - vec2 * DotProduct(vec1, vec2) / DotProduct(vec2, vec2));
 	}
 
 	inline float	Magnitude(const Vector4& vec){

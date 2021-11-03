@@ -46,7 +46,10 @@ namespace FGML {
 		friend inline Matrix3x3 operator*(const Matrix3x3& mat,  const float& scalar);
 		friend inline Matrix3x3 operator/(const Matrix3x3& mat,  const float& scalar);
 
-		inline Vector3 operator[](size_t i);
+		inline float Determinant(void);
+		friend inline float Determinant(const Matrix3x3& mat);
+
+		inline Vector3 operator[](const size_t& rowNumber);
 
 		~Matrix3x3() = default;
 
@@ -193,10 +196,22 @@ namespace FGML {
 						  mat.m_arr[2][0] * divCoeff, mat.m_arr[2][1] * divCoeff, mat.m_arr[2][2] * divCoeff );
 	}
 
-	inline Vector3 Matrix3x3::operator[](size_t i){
-		assert(i < 3uL && "Going beyond the vector!");
+	inline float Matrix3x3::Determinant(void){
+		return (this->m_arr[0][0] * (this->m_arr[1][1] * this->m_arr[2][2] - this->m_arr[1][2] * this->m_arr[2][1])
+				- this->m_arr[0][1] * (this->m_arr[1][0] * this->m_arr[2][2] - this->m_arr[1][2] * this->m_arr[2][0])
+				+ this->m_arr[0][2] * (this->m_arr[1][0] * this->m_arr[2][1] - this->m_arr[1][1] * this->m_arr[2][0]));
+	}
+
+	inline float Determinant(const Matrix3x3& mat){
+		return (mat.m_arr[0][0] * (mat.m_arr[1][1] * mat.m_arr[2][2] - mat.m_arr[1][2] * mat.m_arr[2][1])
+				- mat.m_arr[0][1] * (mat.m_arr[1][0] * mat.m_arr[2][2] - mat.m_arr[1][2] * mat.m_arr[2][0])
+				+ mat.m_arr[0][2] * (mat.m_arr[1][0] * mat.m_arr[2][1] - mat.m_arr[1][1] * mat.m_arr[2][0]));
+	}
+
+	inline Vector3 Matrix3x3::operator[](const size_t& rowNumber){
+		assert(rowNumber < 3uL && "Going beyond the vector!");
 		//return (*reinterpret_cast<Vector3>(this->m_arr[i]));
-		return Vector3(m_arr[i][0], m_arr[i][1], m_arr[i][2]);
+		return Vector3(m_arr[rowNumber][0], m_arr[rowNumber][1], m_arr[rowNumber][2]);
 	}
 
 	std::ostream& operator<<(std::ostream& out, Matrix3x3 m){

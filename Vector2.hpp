@@ -1,4 +1,7 @@
 #include <iostream>
+#include <cmath>
+#include <cassert>
+#include "Macros.hpp"
 
 #ifndef FGML_VECTOR2_HPP_
 #define FGML_VECTOR2_HPP_
@@ -34,6 +37,9 @@ namespace FGML {
 		inline float&  operator[](const size_t& shifting);
 
 		friend inline float   DotProduct(const Vector2& vec1, const Vector2& vec2);
+
+		friend inline Vector2 Project(const Vector2& vec1, const Vector2& vec2);
+		friend inline Vector2  Reject(const Vector2& vec1, const Vector2& vec2);
 
 		friend inline float   Magnitude(const Vector2& vec);
 		friend inline Vector2 Normalize(const Vector2& vec);
@@ -110,6 +116,14 @@ namespace FGML {
 
 	inline float   DotProduct(const Vector2& vec1, const Vector2& vec2){
 		return (vec1.m_x * vec2.m_x + vec1.m_y * vec2.m_y);
+	}
+
+	inline Vector2 Project(const Vector2& vec1, const Vector2& vec2){
+		return (vec2 * DotProduct(vec1, vec2) / DotProduct(vec2, vec2));
+	}
+
+	inline Vector2  Reject(const Vector2& vec1, const Vector2& vec2){
+		return (vec1 - vec2 * DotProduct(vec1, vec2) / DotProduct(vec2, vec2));
 	}
 
 	inline float   Magnitude(const Vector2& vec){	
