@@ -18,9 +18,9 @@ namespace FGML {
 	public:
 		Vector3() = default;
 
-		explicit Vector3(  float x,
-				  		   float y, 
-				  		   float z  );
+		explicit Vector3( float x,
+				  		  float y, 
+				  		  float z );
 
 		friend inline float getXComponent(const Vector3& vec);
 		friend inline float getYComponent(const Vector3& vec);
@@ -41,6 +41,9 @@ namespace FGML {
 
 		friend inline Vector3 CrossProduct(const Vector3& vec1, const Vector3& vec2);
 		friend inline float	    DotProduct(const Vector3& vec1, const Vector3& vec2);
+
+		friend inline Vector3 Project(const Vector3& vec1, const Vector3& vec2);
+		friend inline Vector3  Reject(const Vector3& vec1, const Vector3& vec2);
 
 		friend inline float	  Magnitude(const Vector3& vec);
 		friend inline Vector3 Normalize(const Vector3& vec);
@@ -110,6 +113,14 @@ namespace FGML {
 
 	inline float   DotProduct(const Vector3& vec1, const Vector3& vec2){
 		return (vec1.m_x * vec2.m_x + vec1.m_y * vec2.m_y + vec1.m_z * vec2.m_z);
+	}
+
+	inline Vector3 Project(const Vector3& vec1, const Vector3& vec2){
+		return (vec2 * DotProduct(vec1, vec2) / DotProduct(vec2, vec2));
+	}
+
+	inline Vector3  Reject(const Vector3& vec1, const Vector3& vec2){
+		return (vec1 - vec2 * DotProduct(vec1, vec2) / DotProduct(vec2, vec2));
 	}
 
 	inline Vector3 operator+(const Vector3& vec1, const Vector3& vec2){
